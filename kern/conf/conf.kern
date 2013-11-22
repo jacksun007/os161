@@ -389,6 +389,7 @@ file      userprog/uio.c
 #
 
 optofffile dumbvm   vm/addrspace.c
+optofffile dumbvm   vm/vm.c
 
 #
 # Network
