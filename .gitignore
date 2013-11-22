@@ -3,6 +3,7 @@
 *.ho
 *.ha
 *.a
+*.tar.gz
 
 # gedit temporary files
 *~

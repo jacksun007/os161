@@ -19,6 +19,8 @@
 # libraries into the include directory of the system tree.
 #
 
+ZIPFILE := os161-uoft-v1.tar.gz
+
 all:
 	$(MAKE) includes
 	$(MAKE) depend
@@ -58,6 +60,8 @@ tags depend clean:
 clean: cleanhere
 cleanhere:
 	rm -f *~ mk/*~
-
-
+	
+git-zip:
+	git ls-tree --full-tree -r HEAD | awk '{ print $$4 }' | xargs tar czvf $(ZIPFILE)
+	
 .PHONY: all build compile includes tags depend clean cleanhere
