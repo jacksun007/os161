@@ -7,8 +7,9 @@ continue to make changes to the start code to make it easier for students to
 start and test their implementation.
 
 updates
-=======
+-------
 
-updated multiply to take more than 2 arguments
-added draw, factsum, and vectormult
+* make git-zip will create a tar.gz file of this repository
+* updated multiply to take more than 2 arguments
+* added draw, factsum, and vectormult
 
