@@ -58,7 +58,9 @@ depend:
 	  awk '{x=$$0~"^ ";for(i=1;i<=NF;i++){printf "%d %s\n",x,$$i;x=1; }}'|\
 	  sed '/1 \\/d' | awk '{ printf "%s%s", $$1?" \\\n ":"\n", $$2 }' |\
 	  sed 's|$(OSTREE)|$$(OSTREE)|;$$p;$$x' > depend.mk
+ifeq (depend.mk,$(wildcard depend.mk))
 include depend.mk
+endif
 
 #
 # [ -d $(OSTREE)/lib ] succeeds if $(OSTREE)/lib is a directory.

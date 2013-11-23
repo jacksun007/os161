@@ -9,6 +9,7 @@
 *~
 
 # os-161 temporary files
+depend.mk
 kern/compile/*
 bin/cat/cat
 bin/cp/cp

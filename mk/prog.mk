@@ -59,7 +59,9 @@ progdepend:
 	  sed '/1 \\/d' | awk '{ printf "%s%s", $$1?" \\\n ":"\n", $$2 }' |\
 	  sed 's|$(OSTREE)|$$(OSTREE)|;$$p;$$x' > .deptmp
 	mv -f .deptmp depend.mk
+ifeq (depend.mk,$(wildcard depend.mk))
 include depend.mk
+endif
 
 #
 # [ -d $(OSTREE)/$(BINDIR) ] succeeds if $(OSTREE)/$(BINDIR) is a directory.

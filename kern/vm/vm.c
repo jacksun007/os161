@@ -14,23 +14,15 @@
  * used. The cheesy hack versions in dumbvm.c are used instead.
  */
 
+/*
+ * alloc_kpages() and free_kpages() are called by kmalloc() and thus the whole
+ * kernel will not boot if these 2 functions are not completed.
+ */
+
 void
 vm_bootstrap(void)
 {
 	/* do nothing */
-}
-
-static
-paddr_t
-getppages(unsigned long npages)
-{
-	/*
-	 * Write this.
-	 */
-
-	(void)npages;
-	(void)getppages;
-	return 0;
 }
 
 vaddr_t 
