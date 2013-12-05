@@ -17,6 +17,7 @@
 #include "opt-synchprobs.h"
 #include "opt-sfs.h"
 #include "opt-net.h"
+#include "opt-badsynch.h"
 
 #define _PATH_SHELL "/bin/sh"
 
@@ -79,6 +80,42 @@ cmd_progthread(void *ptr, unsigned long nargs)
 	/* NOTREACHED: runprogram only returns on error. */
 }
 
+#if OPT_BADSYNCH
+static int menusleep_secs = 3;
+
+/*
+ * Command used during Asst0 to specify how long the menu should sleep for.
+ * 
+ * This is a temporary solution for avoiding mingled text before menu thread
+ * is synchronized with user programs.
+ */
+static
+int
+cmd_menusleep(int nargs, char **args)
+{
+	if (nargs > 2) {
+		kprintf("Usage: ms [secs]\n");
+		return EINVAL;
+	}
+
+    if ( nargs == 2 ) {
+        int secs = atoi(args[1]);
+        
+        if ( secs <= 0 ) {
+            kprintf("Error: secs must be greater than 0\n");
+            return EINVAL;
+        }
+        
+        menusleep_secs = secs;
+    }
+    else {
+        kprintf("menu sleep duration: %d seconds\n", menusleep_secs);
+    }
+    
+	return 0;
+}
+#endif
+
 /*
  * Common code for cmd_prog and cmd_shell.
  *
@@ -101,7 +138,10 @@ common_prog(int nargs, char **args)
 	kprintf("Warning: this probably won't work with a "
 		"synchronization-problems kernel.\n");
 #endif
-
+#if OPT_BADSYNCH
+    kprintf("Starting %s, menu will sleep for %d second(s)...\n", args[0],
+        menusleep_secs);
+#endif
 	result = thread_fork(args[0] /* thread name */,
 			args /* thread arg */, nargs /* thread arg */,
 			cmd_progthread, NULL);
@@ -109,7 +149,9 @@ common_prog(int nargs, char **args)
 		kprintf("thread_fork failed: %s\n", strerror(result));
 		return result;
 	}
-
+#if OPT_BADSYNCH
+    clocksleep(menusleep_secs);
+#endif
 	return 0;
 }
 
@@ -450,6 +492,9 @@ static const char *mainmenu[] = {
 	"[1b] Cat/mouse with locks and CVs   ",
 	"[1c] Stoplight                      ",
 #endif
+#if OPT_BADSYNCH
+    "[ms] Menu sleep duration            ",
+#endif
 	"[kh] Kernel heap stats              ",
 	"[q] Quit and shut down              ",
 	NULL
@@ -501,6 +546,9 @@ static struct {
 	{ "1a",		catmousesem },
 	{ "1b",		catmouselock },
 	{ "1c",		createcars },
+#endif
+#if OPT_BADSYNCH
+    { "ms",		cmd_menusleep },
 #endif
 
 	/* stats */

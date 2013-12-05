@@ -19,7 +19,7 @@
 # libraries into the include directory of the system tree.
 #
 
-ZIPFILE := os161-uoft-v1.tar.gz
+ZIPFILE := os161-1.12.tar.gz
 
 all:
 	$(MAKE) includes

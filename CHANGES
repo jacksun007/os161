@@ -5,11 +5,14 @@ OS/161 was written by David A. Holland, with contributions from
 	Georgi Matev
 	Jay Moorthi
 	Geoffrey Werner-Allen
+	Kuei Sun (University of Toronto)
 
 Additional small patches and bug reports have been contributed by
 various other people, all of whom are (hopefully) listed below.
 
 ------------------------------------------------------------
+
+20130106 ksun       OS/161 1.12 released.
 
 20050913 dholland	OS/161 1.11 released.
 20050907 dholland	Minor changes for clean build under gcc 4.0.1.

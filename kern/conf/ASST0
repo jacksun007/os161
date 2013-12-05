@@ -33,3 +33,5 @@ options sfs			# Always use the file system
 
 options dumbvm			# Chewing gum and baling wire for asst 1&2.
 #options synchprobs		# The synchronization problems for assignment 1
+
+options badsynch        # enables menu synchronization via clocksleep

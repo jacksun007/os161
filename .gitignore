@@ -43,7 +43,9 @@ testbin/addexec/addexec
 testbin/argtest/argtest
 testbin/badcall/badcall
 testbin/bigprog/bigprog
+testbin/btree/btree
 testbin/conman/conman
+testbin/console/console
 testbin/crash/crash
 testbin/ctest/ctest
 testbin/draw/draw
