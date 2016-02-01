@@ -225,6 +225,7 @@ createcars(int nargs,
 
         (void) nargs;
         (void) args;
+        (void) message;
 
         /*
          * Start NCARS approachintersection() threads.

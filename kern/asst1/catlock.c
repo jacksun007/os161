@@ -44,6 +44,11 @@
 
 #define NMICE 2
 
+/*
+ * Number of meals.
+ */
+
+#define NMEALS 4
 
 /*
  * 
@@ -149,6 +154,7 @@ catmouselock(int nargs,
 
         (void) nargs;
         (void) args;
+        (void) lock_eat;
    
         /*
          * Start NCATS catlock() threads.

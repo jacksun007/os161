@@ -44,6 +44,11 @@
 
 #define NMICE 2
 
+/*
+ * Number of meals.
+ */
+
+#define NMEALS 4
 
 /*
  * 
@@ -148,6 +153,7 @@ catmousesem(int nargs,
 
         (void) nargs;
         (void) args;
+        (void) sem_eat;
    
         /*
          * Start NCATS catsem() threads.
