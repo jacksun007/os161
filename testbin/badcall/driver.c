@@ -157,34 +157,44 @@ struct {
 	const char *name;
 	void (*f)(void);
 } ops[] = {
-	{ 'a', 2, "execv",		test_execv },
-	{ 'b', 2, "waitpid",		test_waitpid },
-	{ 'c', 2, "open",		test_open },
-	{ 'd', 2, "read",		test_read },
-	{ 'e', 2, "write",		test_write },
-	{ 'f', 2, "close",		test_close },
-	{ 'g', 0, "reboot",		test_reboot },
-	{ 'h', 3, "sbrk",		test_sbrk },
-	{ 'i', 5, "ioctl",		test_ioctl },
-	{ 'j', 2, "lseek",		test_lseek },
-	{ 'k', 4, "fsync",		test_fsync },
-	{ 'l', 4, "ftruncate",		test_ftruncate },
-	{ 'm', 4, "fstat",		test_fstat },
-	{ 'n', 4, "remove",		test_remove },
-	{ 'o', 4, "rename",		test_rename },
-	{ 'p', 5, "link",		test_link },
-	{ 'q', 4, "mkdir",		test_mkdir },
-	{ 'r', 4, "rmdir",		test_rmdir },
-	{ 's', 2, "chdir",		test_chdir },
-	{ 't', 4, "getdirentry",	test_getdirentry },
-	{ 'u', 5, "symlink",		test_symlink },
-	{ 'v', 5, "readlink",		test_readlink },
-	{ 'w', 2, "dup2",		test_dup2 },
-	{ 'x', 5, "pipe",		test_pipe },
-	{ 'y', 5, "__time",		test_time },
-	{ 'z', 2, "__getcwd",		test_getcwd },
-	{ '{', 5, "stat",		test_stat },
-	{ '|', 5, "lstat",		test_lstat },
+    /* asst0: (jsun): badrw does console-only testing */
+	{ 'a', 0, "reboot",		test_reboot },
+	
+	/* asst2: processes */
+	{ 'b', 2, "execv",		test_execv },
+	{ 'c', 2, "waitpid",	        test_waitpid },
+
+        /* asst3: virtual memory */
+	{ 'd', 3, "sbrk",		test_sbrk },
+	
+	/* (jsun): we do not have an assignment for these syscalls */
+	{ 'e', 4, "fsync",		test_fsync },
+	{ 'f', 4, "ftruncate",		test_ftruncate },
+	{ 'g', 4, "fstat",		test_fstat },
+	{ 'h', 4, "remove",		test_remove },
+	{ 'i', 4, "rename",		test_rename },
+	{ 'j', 4, "link",		test_link },
+	{ 'k', 4, "mkdir",		test_mkdir },
+	{ 'l', 4, "rmdir",		test_rmdir },
+	{ 'm', 4, "chdir",		test_chdir },
+	{ 'n', 4, "getdirentry",	test_getdirentry },
+	
+	{ 'o', 4, "read",		test_read },
+	{ 'p', 4, "write",		test_write },
+    { 'q', 4, "open",		test_open },
+	{ 'r', 4, "lseek",		test_lseek },
+	{ 's', 4, "stat",		test_stat },
+	{ 't', 4, "lstat",		test_lstat },	
+	{ 'u', 4, "close",		test_close },
+	
+	{ 'v', 5, "ioctl",		test_ioctl },
+	{ 'w', 5, "symlink",		test_symlink },
+	{ 'x', 5, "readlink",		test_readlink },
+	{ 'y', 5, "dup2",		test_dup2 },
+	{ 'z', 5, "pipe",		test_pipe },
+	{ '{', 5, "__time",		test_time },
+	{ '|', 5, "__getcwd",		test_getcwd },
+	
 	{ 0, 0, NULL, NULL }
 };
 
@@ -205,7 +215,7 @@ menu(void)
 	if (i%2==1) {
 		printf("\n");
 	}
-	printf("[1] %-24s", "asst1");
+	printf("[0] %-24s", "asst0");
 	printf("[2] %-24s\n", "asst2");
 	printf("[3] %-24s", "asst3");
 	printf("[4] %-24s\n", "asst4");
@@ -236,7 +246,7 @@ runit(int op)
 		return;
 	}
 
-	if (op>='1' && op <= '4') {
+	if (op>='0' && op <= '4') {
 		k = op-'0';
 		for (i=0; ops[i].name; i++) {
 			if (ops[i].asst <= k) {
@@ -260,7 +270,7 @@ main(int argc, char **argv)
 {
 	int op, i, j;
 
-	printf("[%c-%c, 1-4, *, ?=menu, !=quit]\n", LOWEST, HIGHEST);
+	printf("[%c-%c, 0-4, *, ?=menu, !=quit]\n", LOWEST, HIGHEST);
 
 	if (argc > 1) {
 		for (i=1; i<argc; i++) {

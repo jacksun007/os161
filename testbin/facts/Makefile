@@ -1,7 +1,7 @@
-# Makefile for forktest
+# Makefile for factsum
 
-SRCS=waitexit3.c
-PROG=waitexit3
+SRCS=facts.c
+PROG=facts
 BINDIR=/testbin
 
 include ../../defs.mk

@@ -1,4 +1,6 @@
 /*
+ * facts.c
+ *
  * calculates factorial sum up to n=12 (n > 12 will cause 32-bit int overflow)
  *
  * this program can test execv() with multiple fork(), and specifically 

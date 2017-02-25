@@ -1,7 +1,7 @@
-# Makefile for forktest
+# Makefile for addexec
 
-SRCS=waitexit4.c
-PROG=waitexit4
+SRCS=wait.c
+PROG=wait
 BINDIR=/testbin
 
 include ../../defs.mk
