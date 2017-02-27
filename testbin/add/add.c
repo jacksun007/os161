@@ -3,7 +3,7 @@
  * test argument passing to child processes.
  *
  * Intended for the basic system calls assignment; this should work
- * once execv() argument handling is implemented.
+ * once command line argument handling is implemented.
  */
 
 #include <stdio.h>
