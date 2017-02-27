@@ -90,11 +90,9 @@ main(int argc, const char *argv[])
 	nhogs = waitall();
 	
 	if ( nhogs == 0 ) {
-	    printf("who let the hogs out?!\n");
-	} else if ( nhogs == 1 ) {
-	    printf("one lonely hog went back in the pen.\n");
+	    printf("who left the hogs out?!\n");
 	} else {
-	    printf("%d hogs are back in the pen.\n", nhogs);
+	    printf("%d hog(s) are back in the pen.\n", nhogs);
 	}
 	
 	return 0;

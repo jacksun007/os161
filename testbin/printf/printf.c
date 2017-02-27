@@ -5,5 +5,5 @@ int
 main(void)
 {
         printf("printf works!\n");
-	return 0;
+        return 0;
 }
