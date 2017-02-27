@@ -9,10 +9,12 @@ start and test their implementation.
 updates
 -------
 
+* added sbrk to testbin
+* merged waitexit1-5 into wait
 * added OPT_BADSYNCH to aid with output synchronization during asst0
 * added btree and console to testbin
 * make git-zip will create a tar.gz file of this repository
 * updated multiply to take more than 2 arguments
-* added addexec, draw, factsum, and vectormult to testbin
+* added draw, facts, and vectormult to testbin
 * improved make process so depend.mk does not need to be checked into repository.
 
