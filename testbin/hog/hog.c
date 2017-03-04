@@ -1,8 +1,7 @@
 /*
  * hog.c
- * 	Spawned by several other user programs to test time-slicing.
- *
- * This does not differ from guzzle in any important way.
+ * 
+ * Spawned by several other user programs to test time-slicing.
  */
 
 int

@@ -1,7 +1,7 @@
-# Makefile for conman
+# Makefile for hasher
 
-SRCS=conman.c
-PROG=conman
+SRCS=hasher.c
+PROG=hasher
 BINDIR=/testbin
 
 include ../../defs.mk

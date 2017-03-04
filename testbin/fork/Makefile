@@ -1,4 +1,4 @@
-# Makefile for forktest
+# Makefile for fork
 
 SRCS=fork.c
 PROG=fork

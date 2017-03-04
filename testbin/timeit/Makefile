@@ -1,7 +1,7 @@
-# Makefile for matmult
+# Makefile for timeit
 
-SRCS=vectormult.c
-PROG=vectormult
+SRCS=timeit.c
+PROG=timeit
 BINDIR=/testbin
 
 include ../../defs.mk

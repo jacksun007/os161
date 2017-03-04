@@ -1,21 +1,33 @@
 /*
- * test02-01_fork
- * 
- * Test case: 
- *      run: p /testbin/test02-01-fork
- *      result expected: 00aa111b1bbb2222c22c2cc2cccc
+ * fork.c
+ *
+ * simple fork program to help you test fork() and copy-on-write 
  *
  */
 
-#include <unistd.h>
-#include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <err.h>
 
-static volatile int mypid;
+static volatile int dummy = 0;
 
-static int dofork(void)
+static
+int
+spin(int n)
+{
+        int i;
+        
+        for (i = 0; i < n; ++i) {
+	        dummy += i;
+	}
+	
+	return 0;
+}
+
+static
+int
+dofork(void)
 {
 	int pid;
 	pid = fork();
@@ -25,76 +37,21 @@ static int dofork(void)
 	return pid;
 }
 
-/*
- * copied from address space test in forktest
- */
-static void check(void)
+int
+main(int argc, const char * argv[])
 {
-	int i;
-
-	mypid = getpid();
+        int i;
+	int n = 1;
 	
-	/* Make sure each fork has its own address space. */
-	for (i=0; i<800; i++) {
-		volatile int seenpid;
-		seenpid = mypid;
-		if (seenpid != getpid()) {
-			errx(1, "pid mismatch (%d, should be %d) "
-			     "- your vm is broken!", 
-			     seenpid, getpid());
-		}
-	}
-}
-
-/*
- * based on dowait in forktest
- */
-static void dowait(int pid)
-{
-
-    int x;
-
-	if (pid<0) {
-		/* fork in question failed; just return */
-		return;
-	}
-	if (pid==0) {
-		/* in the fork in question we were the child; exit */
-		exit(0);
+	if (argc == 2) {
+	        n = atoi(argv[1]);
 	}
 
-	if (waitpid(pid, &x, 0)<0) 
-			warn("waitpid");
-	else if (x!=0)
-			warnx("pid %d: exit %d", pid, x);
-		
-}
-
-int main()
-{
-
-    int pid0, pid1, pid2;
-
-	pid0 = dofork();
-	putchar('0');
-	check();
-	putchar('a');
-
-	pid1 = dofork();
-	putchar('1');
-	check();
-	putchar('b');
-
-	pid2 = dofork();
-	putchar('2');
-	check();
-	//putchar('c');
-
-	dowait(pid2);
-	dowait(pid1);
-	dowait(pid0);
-
-	putchar('\n');
-
-	return 0;
+	for (i = 0; i < n; ++i) {
+		if (dofork() == 0)
+		        return spin(500);
+	}
+	
+	/* spin for a while and exit */
+	return spin(n*1000);
 }

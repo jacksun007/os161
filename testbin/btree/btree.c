@@ -1,8 +1,10 @@
 /* btree.c
  *
- * Operate on a stack, heap, or data region buffer. The buffer is big but we
- * only operate on just the front and the back of it. This is designed to test 
+ * Operate on a stack or heap region buffer. The buffer is big but we only 
+ * operate on just the front and the back of it. This is designed to test 
  * demand paging for the stack and heap, when swapping is not implemented yet.
+ *
+ * Note: use bigprog to test demand paging on the data region
  *
  * Kuei Sun <kuei.sun@utoronto.ca>
  *
@@ -133,13 +135,6 @@ stack()
     exit(btree(buf));
 }
 
-static char gbuf[SIZE];
-static
-void
-data()
-{
-    exit(btree(gbuf));
-}
 
 int
 main(int argc, const char * argv[])
@@ -151,9 +146,6 @@ main(int argc, const char * argv[])
         else if ( strcmp(argv[1], "-h") == 0 ) {
             heap();
         }
-        else if ( strcmp(argv[1], "-d") == 0 ) {
-            data();
-        }
     } else if ( argc == 0 || argc == 1 ) {
         stack();
     }
@@ -161,7 +153,6 @@ main(int argc, const char * argv[])
     printf("usage: %s [-s|-h]\n"
            "   -s      test the stack\n"
            "   -h      test the heap\n"
-           "   -d      test the data region\n"
            "   --help  display this help message\n", argv[0]);
     return 1;
 }

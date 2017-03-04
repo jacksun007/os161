@@ -19,7 +19,7 @@
 # libraries into the include directory of the system tree.
 #
 
-ZIPFILE := os161-1.12.tar.gz
+ZIPFILE := os161-1.11a.tar.gz
 
 all:
 	$(MAKE) includes
