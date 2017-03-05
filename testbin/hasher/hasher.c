@@ -29,36 +29,45 @@ char document[SIZE];
 #define INT_PAGE    (PAGE_SIZE/sizeof(int))
 #define INT_SIZE    (SIZE/sizeof(int))
 
-int hasher(int index)
+int hash_document(int index)
 {
-    int ntimes = 1000;
-    int i, j, n;
-    int prev = 0;
-    
-    for (n = 0; n < ntimes; ++n) {
-        int hash = 0;
+    int i, j;
+    int hash = 0;
         
-        i = index;
-        do {
-            for (j = 0; j < NUM_PAGES; ++j) {
-                /* page-width stride */
-                hash ^= ((int *)document)[i+j*INT_PAGE];
-            }
-            
-            i = (i+1) % INT_PAGE;
-        } while (i != index);
+    i = index;
+    do {
+        for (j = 0; j < NUM_PAGES; ++j) {
+            /* page-width stride */
+            hash ^= ((int *)document)[i+j*INT_PAGE];
+        }
         
-        if (prev == 0) {
-            prev = hash;
-        }
-        else if (prev != hash) {
-            printf("hasher: failed. inconsistent hash\n");
-            return -1;
-        }
-    }
+        i = (i+1) % INT_PAGE;
+    } while (i != index);
     
-    printf("hasher: hash[%d] = %p\n", index, (void *)prev);
-    return time(NULL);
+    return hash;
+}
+
+#define ANSWER 0x3f5a255b
+
+int hasher(int index, int runtime)
+{ 
+    time_t before, now;
+    
+    before = time(NULL);
+ 
+    do {
+        int hash = hash_document(index);
+        
+        if (hash != ANSWER) {
+            printf("hasher: failed. incorrect hash value\n");
+            return 0;
+        }
+        
+        now = time(NULL);
+    } while (now - before <= runtime);
+    
+    printf("hasher: hash[%d] done\n", index);
+    return now;
 }
 
 const char * text[] = {
@@ -89,8 +98,7 @@ const char * text[] = {
 };
 
 /* deterministic pseudo-random */
-int 
-drand(void)
+int drand(void)
 {
     static int seed = 123456789;
     seed = 1103515245 * seed + 12345;
@@ -101,8 +109,7 @@ drand(void)
 
 #define NUM_TEXTS (sizeof(text)/sizeof(const char *))
 
-void 
-fill(void)
+void fill(void)
 {
     char * cptr = (char *)document;
     int size = (int)sizeof(document);
@@ -142,34 +149,44 @@ void fill_deadbeef(int nints, int * buf)
     }
 }
 
-void
-usage(void) {
-    printf("usage: hash NUM\n");
+#define DEFAULT_RUNTIME  10
+#define DEFAULT_NPIDS    12
+
+void usage(const char * metavar) {
+    if (metavar)
+        printf("hasher: %s must be greater than 0\n", metavar);
+    printf("usage: hash [NUM=%d][TIME=%d]\n", DEFAULT_NPIDS,
+           DEFAULT_RUNTIME);
     _exit(-1);
 }
 
 #define MAX_NPIDS 64
 
-int
-main(int argc, const char * argv[])
+int main(int argc, const char * argv[])
 {
     int i = 0;
     int ret = -1;
     pid_t pids[MAX_NPIDS];
-    int npids = 0;
     time_t start;
     int pass = 1;
+    int npids = DEFAULT_NPIDS;
+    int runtime = DEFAULT_RUNTIME;
     
-    if (argc != 2)
-        usage();
-    else {
+    if (argc >= 2) {
         npids = atoi(argv[1]);
+        
         if (npids >= MAX_NPIDS)
             npids = MAX_NPIDS;
-        else if (npids <= 0) {
-            printf("hasher: NUM must be greater than 0\n");
-            usage();
+        else if (npids <= 0)
+            usage("NUM");
+            
+        if (argc == 3) {
+            runtime = atoi(argv[2]);  
+            if (runtime <= 0)
+                usage("TIME");
         }
+        else if (argc > 3)
+            usage(NULL);
     }
     
     fill();
@@ -185,7 +202,7 @@ main(int argc, const char * argv[])
     
     /* child process - do work */
     if (ret == 0) {      
-        return hasher(i);
+        return hasher(i, runtime);
     }
     else if (ret < 0) {
         warn("fork");
@@ -193,6 +210,7 @@ main(int argc, const char * argv[])
     }
 
     printf("hasher: created %d child process(es)\n", i);
+    printf("hasher: running for %d seconds\n", runtime);
     start = time(NULL);
     
     /* blow up pages to make sure copy-on-write is working */
