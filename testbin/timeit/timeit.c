@@ -32,7 +32,7 @@ runprogram(int nruns, char * args[])
                 if ((pid = fork()) == 0) {
                         execv(args[0], args);
                         warn("execv");
-                        return -1;
+                        _exit(-1);
                 }
                 else if (pid > 0) {
                         int x; 

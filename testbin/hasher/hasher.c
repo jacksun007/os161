@@ -15,6 +15,7 @@
 
 #include <err.h>
 #include <stdio.h>
+#include <string.h>
 #include <assert.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -47,6 +48,20 @@ int hash_document(int index)
     return hash;
 }
 
+/*
+ * Use this instead of just calling printf so we know each printout
+ * is atomic; this prevents the lines from getting intermingled.
+ */
+static void say(const char *fmt, ...)
+{
+	char buf[256];
+	va_list ap;
+	va_start(ap, fmt);
+	vsnprintf(buf, sizeof(buf), fmt, ap);
+	va_end(ap);
+	write(STDOUT_FILENO, buf, strlen(buf));
+}
+
 #define ANSWER 0x3f5a255b
 
 int hasher(int index, int runtime)
@@ -59,14 +74,15 @@ int hasher(int index, int runtime)
         int hash = hash_document(index);
         
         if (hash != ANSWER) {
-            printf("hasher: failed. incorrect hash value\n");
+            say("hasher[%d]: failed. incorrect hash value %p\n", index,
+                (void *)hash);
             return 0;
         }
         
         now = time(NULL);
     } while (now - before <= runtime);
     
-    printf("hasher: hash[%d] done\n", index);
+    say("hasher[%d]: pid %d done at t=%d\n", index, getpid(), now);
     return now;
 }
 
@@ -149,13 +165,13 @@ void fill_deadbeef(int nints, int * buf)
     }
 }
 
-#define DEFAULT_RUNTIME  10
-#define DEFAULT_NPIDS    12
+#define DEFAULT_RUNTIME  4
+#define DEFAULT_NPIDS    16
 
 void usage(const char * metavar) {
     if (metavar)
-        printf("hasher: %s must be greater than 0\n", metavar);
-    printf("usage: hash [NUM=%d][TIME=%d]\n", DEFAULT_NPIDS,
+        say("hasher: %s must be greater than 0\n", metavar);
+    say("usage: hash [NUM=%d][TIME=%d]\n", DEFAULT_NPIDS,
            DEFAULT_RUNTIME);
     _exit(-1);
 }
@@ -190,7 +206,7 @@ int main(int argc, const char * argv[])
     }
     
     fill();
-    printf("hasher: spawning %d child process(es)\n", npids);
+    say("hasher: spawning %d child process(es)\n", npids);
 
     while (i < npids) {
         ret = fork();
@@ -209,12 +225,12 @@ int main(int argc, const char * argv[])
         return -1;
     }
 
-    printf("hasher: created %d child process(es)\n", i);
-    printf("hasher: running for %d seconds\n", runtime);
     start = time(NULL);
+    say("hasher: created %d child process(es)\n", i);
+    say("hasher: running for %d seconds\n", runtime); 
     
-    /* blow up pages to make sure copy-on-write is working */
-    fill_deadbeef(INT_PAGE*2, (int *)document);
+    /* blow up some data to make sure copy-on-write is working */
+    fill_deadbeef(INT_PAGE, (int *)document);
     
     for (i = 0; i < npids; ++i) {
         time_t end;
@@ -224,14 +240,14 @@ int main(int argc, const char * argv[])
             return -1;
         }    
         else if (end < start) {
-            printf("hasher: failed. pid %d ended before all child processes "
+            say("hasher: failed. pid %d ended before all child processes "
                    "are created\n", pids[i]);
             pass = 0;
         }
 	}
 	
 	if (pass)
-	    printf("hasher: test completed\n");
+	    say("hasher: test completed\n");
 	    
     return 0;
 }
