@@ -44,7 +44,6 @@ testbin/argtest/argtest
 testbin/badcall/badcall
 testbin/bigprog/bigprog
 testbin/btree/btree
-testbin/conman/conman
 testbin/console/console
 testbin/crash/crash
 testbin/ctest/ctest
@@ -56,7 +55,6 @@ testbin/fork/fork
 testbin/forkbomb/forkbomb
 testbin/forkexecbomb/forkexecbomb
 testbin/forktest/forktest
-testbin/guzzle/guzzle
 testbin/hog/hog
 testbin/huge/huge
 testbin/malloctest/malloctest
@@ -81,10 +79,11 @@ testbin/triplemat/triplemat
 testbin/triplesort/triple.c
 testbin/triplesort/triple.h
 testbin/triplesort/triplesort
-testbin/vectormult/vectormult
-testbin/waitexit1/waitexit1
-testbin/waitexit2/waitexit2
-testbin/waitexit3/waitexit3
-testbin/waitexit4/waitexit4
-testbin/waitexit5/waitexit5
+testbin/exittest/exittest
+testbin/facts/facts
+testbin/hasher/hasher
+testbin/sbrk/sbrk
+testbin/timeit/timeit
+testbin/wait/wait
+
 

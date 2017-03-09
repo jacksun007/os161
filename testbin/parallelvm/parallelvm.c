@@ -208,16 +208,16 @@ status_is_failure(int status)
 
 static
 void
-makeprocs(void)
+makeprocs(int njobs)
 {
 	int i, status, failcount;
 	pid_t pids[NJOBS];
 
 	printf("Job size approximately %lu bytes\n", (unsigned long) JOBSIZE);
-	printf("Forking %d jobs; total load %luk\n", NJOBS,
-	       (unsigned long) (NJOBS * JOBSIZE)/1024);
+	printf("Forking %d jobs; total load %luk\n", njobs,
+	       (unsigned long) (njobs * JOBSIZE)/1024);
 
-	for (i=0; i<NJOBS; i++) {
+	for (i=0; i<njobs; i++) {
 		pids[i] = fork();
 		if (pids[i]<0) {
 			warn("fork");
@@ -229,7 +229,7 @@ makeprocs(void)
 	}
 
 	failcount=0;
-	for (i=0; i<NJOBS; i++) {
+	for (i=0; i<njobs; i++) {
 		if (pids[i]<0) {
 			failcount++;
 		}
@@ -250,9 +250,32 @@ makeprocs(void)
 	printf("Test complete\n");
 }
 
+void 
+usage(void) {
+        printf("usage: parallelvm [NUM=24]\n");
+        _exit(-1); 
+}
+
 int
-main()
+main(int argc, const char * argv[])
 {
-	makeprocs();
+        int num = 0;
+
+        if (argc == 2) {
+                num = atoi(argv[1]);
+        }
+        else if (argc <= 1) {
+                num = NJOBS;
+        }
+        else {
+                usage();
+        }
+        
+        if (num <= 0) {
+                printf("parallelvm: NUM must be greater than zero\n");
+                usage();
+        }
+        
+	makeprocs(num);
 	return 0;
 }
