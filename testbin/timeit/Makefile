@@ -1,6 +1,6 @@
 # Makefile for timeit
 
-SRCS=timeit.c
+SRCS=timeit.c sieve.c
 PROG=timeit
 BINDIR=/testbin
 

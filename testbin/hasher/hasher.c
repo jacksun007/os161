@@ -170,13 +170,13 @@ void fill_deadbeef(int nints, int * buf)
 
 void usage(const char * metavar) {
     if (metavar)
-        say("hasher: %s must be greater than 0\n", metavar);
+        say("hasher: %s must be greater than zero\n", metavar);
     say("usage: hash [NUM=%d][TIME=%d]\n", DEFAULT_NPIDS,
            DEFAULT_RUNTIME);
     _exit(-1);
 }
 
-#define MAX_NPIDS 64
+#define MAX_NPIDS 32
 
 int main(int argc, const char * argv[])
 {
