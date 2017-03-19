@@ -1,16 +1,20 @@
 /*
  * wait.c
  *
- * tests ordering of waitpid() and exit() without needing arguments
+ * tests ordering of waitpid() and _exit() without needing arguments
  *
  * Test case 1:
  *      result expected: wekp
  * Test case 2:
  *      result expected: ewp
  * Test case 3:
- *      result expected: acp
- * Test case 4: 
+ *      result expected: wer
+ * Test case 4:
+ *      result expected: arcsp 
+ * Test case 5: 
  *      result expected: att
+ * Test case 6:
+ *      result expected: acp
  *
  * Authors:
  * Kuei Sun <kuei.sun@mail.utoronto.ca>
@@ -59,10 +63,13 @@ static void check(void)
         }
 }
 
+#define dowait(pid) __dowait((pid), 0)
+#define dowait2(pid, ch) __dowait((pid), (ch))
+
 /*
  * based on dowait in forktest
  */
-static void dowait(int pid)
+static void __dowait(int pid, char ch)
 {
         int x;
 
@@ -74,14 +81,17 @@ static void dowait(int pid)
                 /* we were the child in the fork -- exit */
                 exit(0);
         }
-        if (waitpid(pid, &x, 0)<0) 
-                warn("waitpid");
+        if (waitpid(pid, &x, 0)<0) {
+                if (ch == 0)
+                        warn("waitpid");
+                else
+                        putchar(ch);
+        }
         else if (x!=0)
-                warnx("pid %d: exit %d", pid, x);
-                
+                warnx("pid %d: exit %d", pid, x);                
 }
 
-#define TEST_BEGIN(num) void wait ## num(void) { printf(#num " ");
+#define TEST_BEGIN(num, ...) void wait ## num(void) { __VA_ARGS__; printf(#num " ");
 #define TEST_END() }
 
 TEST_BEGIN(1)
@@ -94,7 +104,7 @@ TEST_BEGIN(1)
                 dowait(pid_c);
         } else {
                 putchar('e');
-                _exit(0);
+                exit(0);
         }
 
         putchar('k');
@@ -116,7 +126,7 @@ TEST_BEGIN(2)
 
         if (getpid() != pid_p) {
                 check();
-                _exit(0);
+                exit(0);
         } else {
                 putchar('w');
                 dowait(pid_c);
@@ -137,18 +147,76 @@ TEST_BEGIN(3)
         if (getpid() != pid_p) {
                 check();
                 putchar('e');
-                _exit(0);
+                exit(0);
         } 
 
         if (getpid() == pid_p)
-                dowait(pid_c);
+                dowait2(pid_c, 'r');
         else
                 printf("wrong!\n");
 
         putchar('\n');
 TEST_END()
 
-TEST_BEGIN(4)
+TEST_BEGIN(4, int pid_s)
+        pid_p = getpid();          
+        putchar('a');
+        pid_s = dofork();          
+
+        if (getpid() == pid_p)
+                check(); 
+
+        if (getpid() == pid_p) {
+                pid_c = dofork();
+        } else {
+                /* sibling here, just sleep */
+                sleep(1);
+                putchar('s');
+                exit(0);
+        }              
+        
+        if (getpid() == pid_p)  
+                check();
+        
+        if (getpid() == pid_p) {
+                dowait(pid_c); 
+                dowait(pid_s);
+        } else {
+                /* try to wait for its sibling */
+                dowait2(pid_s, 'r');
+                putchar('c');
+                exit(0);
+        }
+        
+        putchar('p');
+        putchar('\n');
+TEST_END()
+
+TEST_BEGIN(5, int pid)
+        pid = dofork();
+        if (pid > 0) {
+                dowait(pid);
+                return;
+        }
+
+        pid_p = getpid();
+        putchar('a');
+        pid_c = dofork();
+
+        if (getpid() == pid_p) {
+                check();
+                putchar('t');
+                exit(0);
+        } else {
+                putchar('t');
+                exit(0);
+        }
+
+        putchar('e');
+        putchar('\n');
+TEST_END()
+
+TEST_BEGIN(6)
         pid_p = getpid();          
         putchar('a');
         pid_c = dofork();          
@@ -160,47 +228,24 @@ TEST_BEGIN(4)
                 dowait(pid_c);
                 putchar('p');
                 putchar('\n');
-                _exit(0);            
+                exit(0);            
         } else {
                 putchar('c');          
-                _exit(0);              
+                exit(0);              
         }
 
         putchar('e');              
         putchar('\n');             
 TEST_END()
 
-TEST_BEGIN(5)
-        pid_p = getpid();
-        putchar('a');
-        pid_c = dofork();
-
-        if (getpid() == pid_p) {
-                check();
-                putchar('t');
-                _exit(0);
-        } else {
-                putchar('t');
-                _exit(0);
-        }
-
-        putchar('e');
-        putchar('\n');
-TEST_END()
-
 int main(void)
 {
-        int pid;
         wait1();
         wait2();
         wait3();
-        /* (jsun): test 3 requires both parent and child to exit... 
-         * so we need to fork here */
-        if ( (pid = dofork()) == 0 )
-            wait4();
-        else
-            /* wait for test 3 to finish before starting test 4 */
-            dowait(pid);    
+        wait4();
         wait5();
+        putchar('\n');
+        wait6();
         return 0;
 }

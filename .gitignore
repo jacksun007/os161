@@ -85,5 +85,6 @@ testbin/hasher/hasher
 testbin/sbrk/sbrk
 testbin/timeit/timeit
 testbin/wait/wait
+testbin/sleep/sleep
 
 
