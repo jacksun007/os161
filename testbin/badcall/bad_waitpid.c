@@ -256,7 +256,8 @@ test_waitpid(void)
 	wait_self();
 	wait_parent();
 	
-	// (jsun): in ece344 we do not implement lseek so this test is not 
-	// possible without some form of interprocess communication
+	/* (jsun): in ece344 we do not implement lseek so this test is not 
+	 * possible without some form of interprocess communication
+	 * see wait.c for alternative way to test waiting of sibling */
 	(void)wait_siblings;
 }
