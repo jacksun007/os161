@@ -330,6 +330,19 @@ thread_fork(const char *name,
 }
 
 /*
+ * Suspend execution of curthread until thread terminates. 
+ * Return zero on success, EDEADLK if deadlock would occur.
+ */
+int thread_join(struct thread * thread)
+{
+        // Replace this
+        clocksleep(5);
+        
+        (void)thread;  // suppress warning until code gets written
+        return 0;
+}
+
+/*
  * High level, machine-independent context switch code.
  */
 static

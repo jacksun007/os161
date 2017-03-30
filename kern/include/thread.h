@@ -64,6 +64,12 @@ int thread_fork(const char *name,
 		struct thread **ret);
 
 /*
+ * Suspend execution of the calling thread until the target thread 
+ * terminates, unless the target thread has already terminated.
+ */
+int thread_join(struct thread * thread);
+
+/*
  * Cause the current thread to exit.
  * Interrupts need not be disabled.
  */

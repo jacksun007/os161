@@ -389,7 +389,6 @@ file      userprog/uio.c
 #
 
 optofffile dumbvm   vm/addrspace.c
-optofffile dumbvm   vm/vm.c
 
 #
 # Network
@@ -424,13 +423,6 @@ defoption netfs
 # Note that "emufs" is completely contained in the "emu" device.
 #
 
-############################################
-#                                          #
-#   Asst0 temporary menu synchronization   #
-#                                          #
-############################################
-
-defoption badsynch
 
 ########################################
 #                                      #

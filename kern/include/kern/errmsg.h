@@ -37,6 +37,7 @@ const char *const sys_errlist[] = {
 	"File is not executable",     /* ENOEXEC */
 	"Argument list too long",     /* E2BIG */
 	"Bad file number",            /* EBADF */
+	"Deadlock would occur",       /* EDEADLK */
 };
 
 /*
