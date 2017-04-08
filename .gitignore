@@ -59,6 +59,7 @@ testbin/hog/hog
 testbin/huge/huge
 testbin/malloctest/malloctest
 testbin/matmult/matmult
+testbin/matmult/say.h
 testbin/multiply/multiply
 testbin/palin/palin
 testbin/parallelvm/parallelvm
@@ -69,22 +70,16 @@ testbin/sort/sort
 testbin/stacktest/stacktest
 testbin/sty/sty
 testbin/tictac/tictac
-testbin/triplebigprog/triple.c
-testbin/triplebigprog/triple.h
-testbin/triplebigprog/triplebigprog
-testbin/triplehuge/triplehuge
 testbin/triplemat/triple.c
 testbin/triplemat/triple.h
 testbin/triplemat/triplemat
-testbin/triplesort/triple.c
-testbin/triplesort/triple.h
-testbin/triplesort/triplesort
 testbin/exittest/exittest
 testbin/facts/facts
 testbin/hasher/hasher
+testbin/hasher/say.h
 testbin/sbrk/sbrk
 testbin/timeit/timeit
 testbin/wait/wait
 testbin/sleep/sleep
-
+testbin/parallelvm/say.h
 

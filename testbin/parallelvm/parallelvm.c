@@ -1,17 +1,24 @@
 /*
- * parallelvm.c: highly parallelized VM stress test.
+ * parallelvm.c
+ *
+ * Highly parallelized VM stress test.
  *
  * This test probably won't run with only 512k of physical memory
  * (unless maybe if you have a *really* gonzo VM system) because each
  * of its processes needs to allocate a kernel stack, and those add up
  * quickly.
+ *
+ * UPDATE: modified to accept program argument and choose number of processes
+ * to run
+ *
+ * Kuei Sun <kuei.sun@utoronto.ca>
+ *
+ * University of Toronto, 2017
+ *
  */
 
-#include <sys/types.h>
+#include "say.h"
 #include <sys/wait.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <err.h>
@@ -54,24 +61,6 @@ static const int right_answers[NJOBS] = {
 struct matrix {
 	int m_data[DIM][DIM];
 };
-
-////////////////////////////////////////////////////////////
-
-/*
- * Use this instead of just calling printf so we know each printout
- * is atomic; this prevents the lines from getting intermingled.
- */
-static
-void
-say(const char *fmt, ...)
-{
-	char buf[256];
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap);
-	va_end(ap);
-	write(STDOUT_FILENO, buf, strlen(buf));
-}
 
 ////////////////////////////////////////////////////////////
 

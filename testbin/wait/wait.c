@@ -27,6 +27,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <errno.h>
 #include <err.h>
 
 static volatile int mypid;
@@ -82,7 +83,8 @@ static void __dowait(int pid, char ch)
                 exit(0);
         }
         if (waitpid(pid, &x, 0)<0) {
-                if (ch == 0)
+                /* EINVAL is the only accepted errno */
+                if (ch == 0 || errno != EINVAL)
                         warn("waitpid");
                 else
                         putchar(ch);

@@ -10,11 +10,12 @@ include ../../mk/prog.mk
 progdepend: triple.c triple.h
 
 triple.c:
-	ln -s ../triplehuge/triple.c .
+	ln -s ../tripleprog/triple.c .
 
 triple.h:
-	ln -s ../triplehuge/triple.h .
+	ln -s ../tripleprog/triple.h .
 
 clean: cleanhere
 cleanhere:
 	rm -f triple.c triple.h
+

@@ -1,7 +1,5 @@
 /*
- * draw.c
- *
- * Program to test execv() and program arguments together without fork()
+ * Program to test execv() without fork()
  *
  * Kuei Sun <kuei.sun@utoronto.ca>
  *
@@ -107,7 +105,11 @@ main(int argc, char *argv[])
 {
 	int i, n;
 
-	if ( argc == 3 ) {
+	if ( argc == 0 ) {
+		printf("Warning: argc is 0. Drawing box 5.\n");
+		draw("draw", "box", 5, 1);
+	}
+	else if ( argc == 3 ) {
 		n = atoi(argv[2]);
 		
 		if ( n <= 0 || n > 9 ) {

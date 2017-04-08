@@ -13,9 +13,8 @@
  *
  */
 
+#include "say.h"
 #include <err.h>
-#include <stdio.h>
-#include <string.h>
 #include <assert.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -46,20 +45,6 @@ int hash_document(int index)
     } while (i != index);
     
     return hash;
-}
-
-/*
- * Use this instead of just calling printf so we know each printout
- * is atomic; this prevents the lines from getting intermingled.
- */
-static void say(const char *fmt, ...)
-{
-	char buf[256];
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap);
-	va_end(ap);
-	write(STDOUT_FILENO, buf, strlen(buf));
 }
 
 #define ANSWER 0x3f5a255b

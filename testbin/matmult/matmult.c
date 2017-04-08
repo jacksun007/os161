@@ -1,23 +1,29 @@
 /* matmult.c 
- *    Test program to do matrix multiplication on large arrays.
  *
- *    This version uses a storage-inefficient technique to get a
- *    shorter running time for the same memory usage.
+ * Test program to do matrix multiplication on large arrays.
  *
- *    Intended to stress virtual memory system.
+ * This version uses a storage-inefficient technique to get a
+ * shorter running time for the same memory usage.
  *
- *    Once the VM system assignment is complete your system should be
- *    able to survive this.
+ * Intended to stress virtual memory system.
+ *
+ * Once the VM system assignment is complete your system should be
+ * able to survive this.
+ *
+ * Updated to print the answer atomically
+ *
+ * Kuei Sun <kuei.sun@utoronto.ca>
+ *
+ * University of Toronto, 2017
  */
 
-#include <unistd.h>
-#include <stdio.h>
+#include "say.h"
 
-#define Dim 	72	/* sum total of the arrays doesn't fit in 
-			 * physical memory 
-			 */
+/* sum total of the arrays doesn't fit in physical memory */
+#define Dim 	72	
 
-#define RIGHT  8772192		/* correct answer */
+/* correct answer */
+#define RIGHT  8772192	
 
 int A[Dim][Dim];
 int B[Dim][Dim];
@@ -50,12 +56,12 @@ main()
     for (i = 0; i < Dim; i++)
 	    r += C[i][i];
 
-    printf("matmult finished.\n");
-    printf("answer is: %d (should be %d)\n", r, RIGHT);
+    say("matmult finished.\n");
+    say("answer is: %d (should be %d)\n", r, RIGHT);
     if (r != RIGHT) {
-	    printf("FAILED\n");
+	    say("FAILED\n");
 	    return 1;
     }
-    printf("Passed.\n");
+    say("Passed.\n");
     return 0;
 }
