@@ -28,6 +28,7 @@
 #
 OBJS1=$(SRCS:.c=.o)
 OBJS=$(OBJS1:.S=.o)
+FSROOT=$(OSTREE)/root
 
 #
 # Default rule - create program.
@@ -70,8 +71,8 @@ endif
 #
 install: proginstall
 proginstall:
-	[ -d $(OSTREE)$(BINDIR) ] || mkdir $(OSTREE)$(BINDIR)
-	cp $(PROG) $(OSTREE)$(BINDIR)
+	[ -d $(FSROOT)$(BINDIR) ] || mkdir -p $(FSROOT)$(BINDIR)
+	cp $(PROG) $(FSROOT)$(BINDIR)
 
 #
 # Run ctags to update the tags database.

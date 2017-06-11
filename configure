@@ -29,7 +29,7 @@ OPTFLAGS='-O2'
 # Note that we quote it such that the reference to the home directory
 # is a make variable, not a shell variable. This means it gets expanded
 # when make runs rather than when this script runs.
-OSTREE='$(HOME)/cs161/root'
+OSTREE='$(HOME)/ece344/build'
 
 # Default toolchain name.
 TOOLPREFIX="cs161-" 
@@ -72,7 +72,7 @@ Usage: ./configure [options]
                          disabled by default.
 
     --ostree=PATH        Install the compiled system in a directory tree
-                         rooted at PATH. Default is \$HOME/cs161/root.
+                         rooted at PATH. Default is \$HOME/ece344/build.
 
     --toolprefix=NAME    Set up to use compiler and tools named with a
                          prefix of NAME. The default is "cs161-", so the
