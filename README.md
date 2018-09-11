@@ -6,15 +6,16 @@ os-161, presumably for the ece344 course offered by University of Toronto. We
 continue to make changes to the start code to make it easier for students to
 start and test their implementation.
 
-updates
--------
+major updates
+-------------
 
-* added sbrk to testbin
-* merged waitexit1-5 into wait
-* added OPT_BADSYNCH to aid with output synchronization during asst0
-* added btree and console to testbin
-* make git-zip will create a tar.gz file of this repository
-* updated multiply to take more than 2 arguments
-* added draw, facts, and vectormult to testbin
-* improved make process so depend.mk does not need to be checked into repository.
+* added/modified various testbin programs used by os161-tester
+* improved make process so depend.mk does not need to be checked into repository
+* moved all executables into root directory under build folder so that so students cannot access DISK#.img 
+
+assignment 1
+------------
+
+assignment 2
+------------
 
