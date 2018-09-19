@@ -2,7 +2,6 @@
 #define _ADDRSPACE_H_
 
 #include <vm.h>
-#include "opt-dumbvm.h"
 
 struct vnode;
 

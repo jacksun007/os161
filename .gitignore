@@ -82,4 +82,5 @@ testbin/timeit/timeit
 testbin/wait/wait
 testbin/sleep/sleep
 testbin/parallelvm/say.h
+testbin/tripleprog/tripleprog
 

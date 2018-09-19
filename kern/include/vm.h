@@ -2,6 +2,7 @@
 #define _VM_H_
 
 #include <machine/vm.h>
+#include "opt-dumbvm.h"
 
 /*
  * VM system-related definitions.
