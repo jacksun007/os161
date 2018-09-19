@@ -47,5 +47,5 @@ inline void catmouse_eat(const char *who, int num, int bowl, int iteration)
                 bowl, iteration);
 }
 
-#endif _CATMOUSE_H_
+#endif /* _CATMOUSE_H_ */
 
