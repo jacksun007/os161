@@ -33,12 +33,12 @@
 
 /*
  * 
- * Macro Definition
+ * Function Definition
  * 
  */
 
-/* who should be "cat" or "mouse" */
-inline void catmouse_eat(const char *who, int num, int bowl, int iteration)
+static inline void 
+catmouse_eat(const char *who, int num, int bowl, int iteration)
 {
         kprintf("%s: %d starts eating: bowl %d, iteration %d\n", who, num, 
                 bowl, iteration);
@@ -46,6 +46,7 @@ inline void catmouse_eat(const char *who, int num, int bowl, int iteration)
         kprintf("%s: %d ends eating: bowl %d, iteration %d\n", who, num, 
                 bowl, iteration);
 }
+
 
 #endif /* _CATMOUSE_H_ */
 
