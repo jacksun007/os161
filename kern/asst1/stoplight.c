@@ -186,9 +186,9 @@ approachintersection(void * unusedpointer,
 
         (void) unusedpointer;
         (void) carnumber;
-	(void) gostraight;
-	(void) turnleft;
-	(void) turnright;
+        (void) gostraight;
+        (void) turnleft;
+        (void) turnright;
 
         /*
          * cardirection is set randomly.
