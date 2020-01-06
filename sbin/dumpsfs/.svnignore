@@ -1,7 +1,0 @@
-dumpsfs
-support.c
-support.h
-disk.c
-disk.h
-host-dumpsfs
-*.ho
