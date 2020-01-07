@@ -426,14 +426,14 @@ defoption netfs
 
 ########################################
 #                                      #
-#    Asst1 synchronization problems    #
+#    Asst2 synchronization problems    #
 #                                      #
 ########################################
 
 defoption synchprobs
-optfile   synchprobs  asst1/catlock.c
-optfile   synchprobs  asst1/catsem.c
-optfile   synchprobs  asst1/stoplight.c
+optfile   synchprobs  asst2/catlock.c
+optfile   synchprobs  asst2/catsem.c
+optfile   synchprobs  asst2/stoplight.c
 
 
 ########################################
