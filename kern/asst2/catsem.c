@@ -163,7 +163,7 @@ catmousesem(int nargs,
 
         (void)nargs;
         (void)args;
-        kprintf("stoplight test done\n");
+        kprintf("catsem test done\n");
 
         return 0;
 }
