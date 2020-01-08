@@ -218,39 +218,30 @@ createcars(int nargs,
            char ** args)
 {
         int index, error;
-
-        /*
-         * Avoid unused variable warnings.
-         */
-
-        (void) nargs;
-        (void) args;
-        (void) message;
-
+    
         /*
          * Start NCARS approachintersection() threads.
          */
 
         for (index = 0; index < NCARS; index++) {
-
                 error = thread_fork("approachintersection thread",
-                                    NULL,
-                                    index,
-                                    approachintersection,
-                                    NULL
-                                    );
+                                    NULL, index, approachintersection, NULL);
 
                 /*
-                 * panic() on error.
-                 */
+                * panic() on error.
+                */
 
-                if (error) {
-                        
+                if (error) {         
                         panic("approachintersection: thread_fork failed: %s\n",
-                              strerror(error)
-                              );
+                              strerror(error));
                 }
         }
 
+        while (thread_count() > 1)
+                thread_yield();
+
+        (void)nargs;
+        (void)args;
+        kprintf("stoplight test done\n");
         return 0;
 }

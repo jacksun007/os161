@@ -48,6 +48,9 @@ void thread_panic(void);
 /* Call during shutdown to clean up (must be called by initial thread) */
 void thread_shutdown(void);
 
+/* Returns number of active threads */
+int thread_count(void);
+
 /*
  * Make a new thread, which will start executing at "func".  The
  * "data" arguments (one pointer, one integer) are passed to the

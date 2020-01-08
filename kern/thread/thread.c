@@ -35,6 +35,16 @@ static struct array *zombies;
 static int numthreads;
 
 /*
+ * Returns number of active threads
+ */
+
+int
+thread_count(void)
+{
+	return numthreads;
+}
+
+/*
  * Create a thread. This is used both to create the first thread's 
  * thread structure and to create subsequent threads.
  */
