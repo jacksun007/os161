@@ -1,9 +1,7 @@
 /*
  * catsem.c
  *
- * 30-1-2003 : GWA : Stub functions created for CS161 Asst1.
- *
- * NB: Please use SEMAPHORES to solve the cat syncronization problem in 
+ * Please use SEMAPHORES to solve the cat syncronization problem in 
  * this file.
  */
 
@@ -157,16 +155,16 @@ catmousesem(int nargs,
         }
 
         /*
-         * Avoid unused variable warnings.
+         * wait until all other threads finish
          */
 
-        (void) nargs;
-        (void) args;
+        while (thread_count() > 1)
+                thread_yield();
+
+        (void)nargs;
+        (void)args;
+        kprintf("stoplight test done\n");
 
         return 0;
 }
 
-
-/*
- * End of catsem.c
- */

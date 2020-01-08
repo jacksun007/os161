@@ -1,9 +1,7 @@
 /* 
  * stoplight.c
  *
- * 31-1-2003 : GWA : Stub functions created for CS161 Asst1.
- *
- * NB: You can use any synchronization primitives available to solve
+ * You can use any synchronization primitives available to solve
  * the stoplight problem in this file.
  */
 
@@ -19,12 +17,6 @@
 #include <test.h>
 #include <thread.h>
 
-
-/*
- *
- * Constants
- *
- */
 
 /*
  * Number of cars created.
@@ -236,6 +228,10 @@ createcars(int nargs,
                               strerror(error));
                 }
         }
+        
+        /*
+         * wait until all other threads finish
+         */
 
         while (thread_count() > 1)
                 thread_yield();
@@ -245,3 +241,4 @@ createcars(int nargs,
         kprintf("stoplight test done\n");
         return 0;
 }
+

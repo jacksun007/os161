@@ -1,9 +1,7 @@
 /*
  * catlock.c
  *
- * 30-1-2003 : GWA : Stub functions created for CS161 Asst1.
- *
- * NB: Please use LOCKS/CV'S to solve the cat syncronization problem in 
+ * Please use LOCKS/CV'S to solve the cat syncronization problem in 
  * this file.
  */
 
@@ -156,13 +154,17 @@ catmouselock(int nargs,
                               );
                 }
         }
-
+        
         /*
-         * Avoid unused variable warnings.
+         * wait until all other threads finish
          */
+        
+        while (thread_count() > 1)
+                thread_yield();
 
-        (void) nargs;
-        (void) args;
+        (void)nargs;
+        (void)args;
+        kprintf("catlock test done\n");
 
         return 0;
 }
