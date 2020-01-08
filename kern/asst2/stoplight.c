@@ -236,6 +236,7 @@ createcars(int nargs,
         while (thread_count() > 1)
                 thread_yield();
 
+	(void)message;
         (void)nargs;
         (void)args;
         kprintf("stoplight test done\n");
