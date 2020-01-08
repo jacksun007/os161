@@ -23,7 +23,7 @@ assignment 1
 * `read` and `write` system call for console input and output
 * `sleep` system call
 * `__time` system call
-* `__exit` system call
+* `_exit` system call
 
 
 assignment 2
