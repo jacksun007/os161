@@ -29,9 +29,38 @@ assignment 1
 assignment 2
 ------------
 
+### Deliverables
+
+* lock implementation
+* cv implementation
+* catsem or catlock
+* stoplight
+
 assignment 3
 ------------
 
+### Deliverables
+
+* `waitpid` system call
+* `fork` system call
+* `getpid` system call
+* `execv` system call
+* `_exit` system call (needs to be updated)
+* menu synchronization
+* menu arguments (similar to execv)
+
+### TODO
+
+* `pipe` system call (to allow communication between processes)
+
 assignment 4
 ------------
+
+### Deliverables
+
+* `sbrk` system call
+* page reclamation
+* demand paging
+* swap
+* copy-on-write
 
